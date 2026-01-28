@@ -1,14 +1,30 @@
 import { useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { View, Button, TextInput } from "react-native";
-
+import { Text, View, Button, TextInput } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
 import ListItem from "./components/ListItem.js";
 
 import style from "./style.js";
 
+import { useFonts } from "expo-font";
+import { useEffect } from "react";
+
+import * as SplashScreen from "expo-splash-screen";
+
+// Call before Component Function
+SplashScreen.preventAutoHideAsync();
+
 function App() {
+  const [loaded, error] = useFonts({
+    "Birthstone-Regular": require("./assets/fonts/Birthstone-Regular.ttf"),
+  });
+
+  useEffect(() => {
+    if (loaded || error) {
+      SplashScreen.hideAsync();
+    }
+  }, [loaded, error]);
+
   let [nextID, setNextID] = useState(1);
   let [listItems, setListItems] = useState([]);
 
@@ -40,6 +56,7 @@ function App() {
   return (
     <SafeAreaView style={style.app}>
       <StatusBar style="auto" />
+      <Text style={style.header}> Nick Gregory Lab 2 </Text>
       <ListItem
         items={listItems}
         deleteItemCallback={removeItemFromList}

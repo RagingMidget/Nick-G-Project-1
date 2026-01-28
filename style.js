@@ -3,9 +3,9 @@ import { StyleSheet } from "react-native";
 export const MARGIN = 10;
 
 export const palette = {
-  background: "#fafbf6",
-  border: "#565a75",
-  text: "#0f0f1b",
+  background: "#fcfdff",
+  border: "#272c35",
+  text: "#e60645",
 };
 
 export default StyleSheet.create({
@@ -13,7 +13,19 @@ export default StyleSheet.create({
     backgroundColor: palette.background,
     flex: 1,
   },
+  header: {
+    fontSize: 24,
+    fontFamily: "Birthstone-Regular",
+    color: palette.text,
+    textAlign: "center",
+  },
+
   list: {
+    marginTop: 4,
+    borderTopWidth: 4,
+    borderBottomWidth: 4,
+    marginBottom: 4,
+    borderColor: palette.border,
     backgroundColor: palette.background,
     flex: 1,
   },
@@ -27,6 +39,7 @@ export default StyleSheet.create({
   listItemText: {
     fontSize: 24,
     color: palette.text,
+    fontFamily: "Birthstone-Regular",
   },
   inputText: {
     margin: MARGIN,
@@ -36,6 +49,7 @@ export default StyleSheet.create({
     padding: 10,
     fontSize: 24,
     color: palette.text,
+    fontFamily: "Birthstone-Regular",
   },
   button: {
     margin: MARGIN,
