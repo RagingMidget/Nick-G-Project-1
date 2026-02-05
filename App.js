@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { Text, TextInput } from "react-native";
+import { Text, TextInput, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ListItem from "./components/ListItem.js";
 import Button from "./components/Button.js";
@@ -54,6 +54,13 @@ function App() {
     setNewItemText(text);
   }
 
+  const confirmDeleteAll = () =>
+    Alert.alert(
+      "Delete All Items",
+      "Are you sure you want to delete all items?",
+      [{ text: "Yes", onPress: clearList }, { text: "No" }],
+    );
+
   return (
     <SafeAreaView style={style.app}>
       <StatusBar style="auto" />
@@ -72,7 +79,7 @@ function App() {
         onPress={addItemToList}
         style={{ backgroundColor: "blue" }}
       ></Button>
-      <Button text="CLEAR LIST" onPress={clearList}></Button>
+      <Button text="CLEAR LIST" onPress={confirmDeleteAll}></Button>
     </SafeAreaView>
   );
 }
