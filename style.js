@@ -78,4 +78,25 @@ export default StyleSheet.create({
     color: palette.text,
     textAlign: "center",
   },
+  prompt: {
+    margin: MARGIN * 4,
+    alignSelf: "stretch",
+    borderWidth: 2,
+    borderRadius: 12,
+    borderBottomWidth: 4,
+    borderRightWidth: 4,
+    borderColor: palette.border,
+    backgroundColor: palette.background,
+  },
+  promptText: {
+    margin: MARGIN,
+    fontSize: 20,
+    fontFamily: "Birthstone-Regular",
+    color: palette.text,
+    textAlign: "center",
+  },
+  buttonRow: {
+    flexDirection: "row",
+    justifyContent: "center",
+  },
 });

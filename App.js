@@ -6,6 +6,7 @@ import ListItem from "./components/ListItem.js";
 import Button from "./components/Button.js";
 import style from "./style.js";
 import Modal from "./components/Modal.js";
+import DeleteItem from "./components/prompts/DeleteItem.js";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
 import * as SplashScreen from "expo-splash-screen";
@@ -85,7 +86,11 @@ function App() {
         style={{ backgroundColor: "blue" }}
       ></Button>
       <Button text="CLEAR LIST" onPress={confirmDeleteAll}></Button>
-      <Modal visible={modalVisible} onRequestClose={closeModal}></Modal>
+      <Modal
+        visible={modalVisible}
+        onRequestClose={closeModal}
+        content={<DeleteItem yes={closeModal} no={closeModal} />}
+      />
     </SafeAreaView>
   );
 }
