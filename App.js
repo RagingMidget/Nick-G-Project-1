@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { Text, View, Button, TextInput } from "react-native";
+import { Text, TextInput } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ListItem from "./components/ListItem.js";
+import Button from "./components/Button.js";
 
 import style from "./style.js";
 
@@ -66,12 +67,12 @@ function App() {
         value={newItemText}
         onChangeText={onTextChanged}
       ></TextInput>
-      <View style={style.button}>
-        <Button title="ADD ITEM" onPress={addItemToList}></Button>
-      </View>
-      <View style={style.button}>
-        <Button title="CLEAR LIST" onPress={clearList}></Button>
-      </View>
+      <Button
+        text="ADD ITEM"
+        onPress={addItemToList}
+        style={{ backgroundColor: "blue" }}
+      ></Button>
+      <Button text="CLEAR LIST" onPress={clearList}></Button>
     </SafeAreaView>
   );
 }
