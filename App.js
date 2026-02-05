@@ -1,15 +1,13 @@
 import { useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { Text, TextInput, Alert } from "react-native";
+import { Text, TextInput, Alert, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ListItem from "./components/ListItem.js";
 import Button from "./components/Button.js";
-
 import style from "./style.js";
-
+import Modal from "./components/Modal.js";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
-
 import * as SplashScreen from "expo-splash-screen";
 
 // Call before Component Function
@@ -61,10 +59,17 @@ function App() {
       [{ text: "Yes", onPress: clearList }, { text: "No" }],
     );
 
+  // Modal State
+  const [modalVisible, setModalVisible] = useState(false);
+  const openModal = () => setModalVisible(true);
+  const closeModal = () => setModalVisible(false);
+
   return (
     <SafeAreaView style={style.app}>
       <StatusBar style="auto" />
-      <Text style={style.header}> Nick Gregory Lab 2 </Text>
+      <Pressable onPress={openModal}>
+        <Text style={style.header}>YOUR NAME LAB 2</Text>
+      </Pressable>
       <ListItem
         items={listItems}
         deleteItemCallback={removeItemFromList}
@@ -80,6 +85,7 @@ function App() {
         style={{ backgroundColor: "blue" }}
       ></Button>
       <Button text="CLEAR LIST" onPress={confirmDeleteAll}></Button>
+      <Modal visible={modalVisible} onRequestClose={closeModal}></Modal>
     </SafeAreaView>
   );
 }
