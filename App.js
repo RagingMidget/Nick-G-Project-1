@@ -32,12 +32,12 @@ function App() {
 
   let clearList = () => setListItems([]);
 
-  function addItemToList() {
-    if (newItemText === "") return;
-    let newItem = { text: newItemText, id: nextID };
+  function addItemToList(text) {
+    if (text === "") return;
+    let newItem = { text, id: nextID };
     setNextID(nextID + 1);
     setListItems([...listItems, newItem]);
-    setNewItemText("");
+    closeModal();
   }
 
   function removeItemFromList(idToRemove) {
@@ -50,10 +50,10 @@ function App() {
     setListItems(arrayWithRemovedItem);
   }
 
-  let [newItemText, setNewItemText] = useState("");
-  function onTextChanged(text) {
-    setNewItemText(text);
-  }
+  //  let [newItemText, setNewItemText] = useState("");
+  //  function onTextChanged(text) {
+  //    setNewItemText(text);
+  //  }
 
   const confirmDeleteAll = () =>
     Alert.alert(
@@ -75,6 +75,12 @@ function App() {
     openModal();
   };
 
+  // Need the function to open the modal
+  const promptAddItem = () => {
+    setModalContentKey("add-item");
+    openModal();
+  };
+
   // Modal
   const [modalVisible, setModalVisible] = useState(false);
   const [modalContentKey, setModalContentKey] = useState();
@@ -91,14 +97,10 @@ function App() {
         items={listItems}
         deleteItemCallback={promptDeleteItem}
       ></ListItem>
-      <TextInput
-        style={style.inputText}
-        value={newItemText}
-        onChangeText={onTextChanged}
-      ></TextInput>
+
       <Button
         text="ADD ITEM"
-        onPress={addItemToList}
+        onPress={promptAddItem}
         style={{ backgroundColor: "#fcfdff" }}
       ></Button>
       <Button text="CLEAR LIST" onPress={confirmDeleteAll}></Button>
@@ -111,6 +113,13 @@ function App() {
               <Pressable onPress={closeModal}>
                 <Text>APP INFO GOES HERE</Text>
               </Pressable>
+            ),
+
+            "add-item": (
+              <AddItem
+                add={(text) => addItemToList(text)}
+                cancel={closeModal}
+              />
             ),
 
             "delete-item": (
