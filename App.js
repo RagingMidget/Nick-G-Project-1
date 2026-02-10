@@ -10,6 +10,7 @@ import DeleteItem from "./components/prompts/DeleteItem.js";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
 import * as SplashScreen from "expo-splash-screen";
+import AddItem from "./components/prompts/AddItem.js";
 
 // Call before Component Function
 SplashScreen.preventAutoHideAsync();
@@ -65,19 +66,26 @@ function App() {
     let item = listItems.find((i) => i.id === idToRemove);
     if (!item) return;
     setSelectedItem(item);
+    setModalContentKey("delete-item"); // New
     openModal();
   };
 
-  // Modal State
+  const promptAppInfo = () => {
+    setModalContentKey("app-info");
+    openModal();
+  };
+
+  // Modal
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalContentKey, setModalContentKey] = useState();
   const openModal = () => setModalVisible(true);
   const closeModal = () => setModalVisible(false);
 
   return (
     <SafeAreaView style={style.app}>
       <StatusBar style="auto" />
-      <Pressable onPress={openModal}>
-        <Text style={style.header}>Nick Gregory Lab 3</Text>
+      <Pressable onPress={promptAppInfo}>
+        <Text style={style.header}>Nick Gregory LAB 4</Text>
       </Pressable>
       <ListItem
         items={listItems}
@@ -98,14 +106,24 @@ function App() {
         visible={modalVisible}
         onRequestClose={closeModal}
         content={
-          <DeleteItem
-            itemText={selectedItem?.text}
-            yes={() => {
-              removeItemFromList(selectedItem?.id);
-              closeModal();
-            }}
-            no={closeModal}
-          />
+          {
+            "app-info": (
+              <Pressable onPress={closeModal}>
+                <Text>APP INFO GOES HERE</Text>
+              </Pressable>
+            ),
+
+            "delete-item": (
+              <DeleteItem
+                itemText={selectedItem?.text}
+                yes={() => {
+                  removeItemFromList(selectedItem.id);
+                  closeModal();
+                }}
+                no={closeModal}
+              />
+            ),
+          }[modalContentKey]
         }
       ></Modal>
     </SafeAreaView>
