@@ -57,7 +57,7 @@ export default StyleSheet.create({
     borderBottomWidth: 4,
     borderRightWidth: 4,
     borderRadius: 12,
-    borderColor: palette.border,
+    backgroundColor: palette.background,
     padding: 10,
     alignItems: "center",
   },
@@ -68,7 +68,7 @@ export default StyleSheet.create({
     borderBottomWidth: 2,
     borderRightWidth: 2,
     borderRadius: 12,
-    borderColor: palette.border,
+    backgroundColor: palette.background,
     padding: 10,
     alignItems: "center",
   },
@@ -98,5 +98,15 @@ export default StyleSheet.create({
   buttonRow: {
     flexDirection: "row",
     justifyContent: "center",
+  },
+  icon: {
+    color: palette.text,
+  },
+  infoText: {
+    margin: MARGIN,
+    fontSize: 20,
+    fontFamily: "Birthstone-Regular",
+    color: palette.text,
+    textAlign: "center",
   },
 });

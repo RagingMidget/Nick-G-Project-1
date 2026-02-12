@@ -8,7 +8,7 @@ export default (props) => {
   let [text, setText] = useState("");
   return (
     <View style={style.prompt}>
-      <Text style={style.promptText}>Add New Item</Text>
+      <Text style={style.promptText}>{props.title ?? "Add New Item"}</Text>
       <TextInput
         style={style.inputText}
         value={text}
@@ -16,14 +16,16 @@ export default (props) => {
       />
       <View style={style.buttonRow}>
         <Button
-          text="Add"
-          onPress={() => props.add(text)}
+          text="Cancel"
+          onPress={props.cancel}
+          icon={{ name: "close", size: 32 }}
           style={{ flex: 1 }}
         ></Button>
         <Button
-          text="Cancel"
-          style={{ flex: 1 }}
-          onPress={props.cancel}
+          text="Add"
+          onPress={() => props.add(text)}
+          icon={{ name: "checkmark", size: 32 }}
+          style={{ flex: 2 }}
         ></Button>
       </View>
     </View>

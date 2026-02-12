@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { Text, TextInput, Alert, Pressable } from "react-native";
+import { Text, TextInput, Alert, Pressable, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ListItem from "./components/ListItem.js";
 import Button from "./components/Button.js";
@@ -11,6 +11,23 @@ import { useFonts } from "expo-font";
 import { useEffect } from "react";
 import * as SplashScreen from "expo-splash-screen";
 import AddItem from "./components/prompts/AddItem.js";
+import AppInfo from "./components/prompts/AppInfo.js";
+
+const APP_NAME = `Contacts`;
+const AUTHOR = "Nick Gregory";
+const CUSTOM_FONT = "Birthstone-Regular";
+
+const COLOR_BACKGROUND = "#fcfdff";
+const COLOR_BORDER = "#272c35";
+const COLOR_TEXT = "#e60645";
+
+const APP_INFO = `${AUTHOR}
+
+Font: ${CUSTOM_FONT}
+
+Background: ${COLOR_BACKGROUND}
+Border: ${COLOR_BORDER}
+Text: ${COLOR_TEXT}`;
 
 // Call before Component Function
 SplashScreen.preventAutoHideAsync();
@@ -28,7 +45,9 @@ function App() {
 
   let [nextID, setNextID] = useState(1);
   let [listItems, setListItems] = useState([]);
-  let [selectedItem, setSelectedItem] = useState(); // New variable to track which item to delete
+  // New variable to track which item to delete
+  let [selectedItem, setSelectedItem] = useState();
+  let [editText, setEditText] = useState("");
 
   let clearList = () => setListItems([]);
 
@@ -70,6 +89,13 @@ function App() {
     openModal();
   };
 
+  const promptEditItem = (item) => {
+    setSelectedItem(item);
+    setEditText(item.text);
+    setModalContentKey("edit-item");
+    openModal();
+  };
+
   const promptAppInfo = () => {
     setModalContentKey("app-info");
     openModal();
@@ -91,29 +117,32 @@ function App() {
     <SafeAreaView style={style.app}>
       <StatusBar style="auto" />
       <Pressable onPress={promptAppInfo}>
-        <Text style={style.header}>Nick Gregory LAB 4</Text>
+        <Text style={style.header}>{APP_NAME}</Text>
       </Pressable>
       <ListItem
         items={listItems}
         deleteItemCallback={promptDeleteItem}
+        editItemCallback={promptEditItem}
       ></ListItem>
 
-      <Button
-        text="ADD ITEM"
-        onPress={promptAddItem}
-        style={{ backgroundColor: "#fcfdff" }}
-      ></Button>
-      <Button text="CLEAR LIST" onPress={confirmDeleteAll}></Button>
+      <View style={style.buttonRow}>
+        <Button
+          icon={{ name: "trash-outline", size: 32 }}
+          style={{ flex: 1 }}
+          onPress={confirmDeleteAll}
+        ></Button>
+        <Button
+          icon={{ name: "add-outline", size: 32 }}
+          style={{ flex: 3 }}
+          onPress={promptAddItem}
+        ></Button>
+      </View>
       <Modal
         visible={modalVisible}
         onRequestClose={closeModal}
         content={
           {
-            "app-info": (
-              <Pressable onPress={closeModal}>
-                <Text>APP INFO GOES HERE</Text>
-              </Pressable>
-            ),
+            "app-info": <AppInfo text={APP_INFO} ok={closeModal} />,
 
             "add-item": (
               <AddItem
@@ -130,6 +159,19 @@ function App() {
                   closeModal();
                 }}
                 no={closeModal}
+              />
+            ),
+            "edit-item": (
+              <AddItem
+                title="Edit Item"
+                add={(newText) => {
+                  let updated = listItems.map((i) =>
+                    i.id === selectedItem.id ? { ...i, text: newText } : i,
+                  );
+                  setListItems(updated);
+                  closeModal();
+                }}
+                cancel={closeModal}
               />
             ),
           }[modalContentKey]

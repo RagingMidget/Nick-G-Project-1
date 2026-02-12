@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Pressable, Text } from "react-native";
-
+import Ionicons from "@expo/vector-icons/Ionicons";
 import style from "../style.js";
 
 export default (props) => {
@@ -21,7 +21,15 @@ export default (props) => {
       onPressIn={pressIn}
       onPressOut={pressOut}
     >
-      <Text style={buttonTextStyle}>{props.text}</Text>
+      {props?.icon ? (
+        <Ionicons
+          name={props.icon.name}
+          size={props.icon.size}
+          color={style.icon.color}
+        />
+      ) : (
+        <Text style={buttonTextStyle}>{props.text}</Text>
+      )}
     </Pressable>
   );
 };
